@@ -1,11 +1,6 @@
-import fs from "fs";
+import { CsvFileReader } from "./CsvFileReader";
 
-const matches = fs
-  .readFileSync("football.csv", {
-    encoding: "utf-8",
-  })
-  .split("\n")
-  .map((item: string): string[] => item.split(","));
+const reader = new CsvFileReader("football.csv");
 
 // enum - enumeration
 enum MatchResult {
@@ -17,7 +12,7 @@ const { HomeWin, AwayWin, Draw } = MatchResult;
 
 let manUnitedWins = 0;
 
-for (let match of matches) {
+for (let match of reader.data) {
   if (match[1] === "Man United" && match[5] === HomeWin) {
     manUnitedWins++;
   } else if (match[2] === "Man United" && match[5] === AwayWin) {
